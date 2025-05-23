@@ -28,48 +28,44 @@
       width: 100%;
       max-width: 800px;
     }
-
 .language-selector {
-  position: relative;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #e0e0e0;
-  border-radius: 15px;
-  padding: 10px 16px;
-  width: 80vw;
-  min-height: 48px; /* ← height: 24px を削除し、これを追加 */
+  position: relative;
+  background-color: #e5e5ea; /* iOS標準風のグレー */
+  border-radius: 12px;
+  padding: 4px;
+  width: 90vw;
+  max-width: 400px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 }
 
-    .lang-btn {
-      position: relative;
-      z-index: 2;
-      border-radius: 40px;
-      border: none;
-      background: none;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 10px 8vw;
-      font-size: clamp(18px, 4.5vw, 32px);
-      color: #555;
-      transition: color 0.3s;
-      min-width: 70px;
-      outline: none;
-    }
+.lang-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 0;
+  color: #333;
+  z-index: 2;
+  transition: color 0.2s ease;
+}
 
-    .lang-btn:hover {
-      color: #000;
-    }
+.lang-btn.active {
+  color: black;
+}
 
-    .slider {
-      position: absolute;
-      height: 70%;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      transition: left 0.3s ease, width 0.3s ease;
-      z-index: 1;
-    }
+.slider {
+  position: absolute;
+  background: white;
+  height: calc(100% - 8px);
+  top: 4px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: left 0.25s ease, width 0.25s ease;
+  z-index: 1;
+}
 
     #menu {
       width: 100%;
@@ -112,6 +108,7 @@
 
 .shokken-tag {
   margin-top: 12px;
+  margin-bottom: 10px;
   padding: 8px 18px; /* ← パディング大きくして余白を増やす */
   background-color: #ffffff;
   border-radius: 14px;
@@ -159,6 +156,7 @@
 
 .tea-options li {
   margin: 0px 0;
+  line-height: 1.5;
   
 }
 
@@ -182,7 +180,7 @@
 
 .option-icons {
   display: flex;
-  gap: 4px;                /* ← アイコンの間隔を狭く */
+  gap: 0px;                /* ← アイコンの間隔を狭く */
 }
 .inline-icon {
   height: 60px;
@@ -194,6 +192,43 @@
   font-weight: 200;
   font-family: 'Noto Sans JP', sans-serif;
   text-align: left;
+}
+
+.tea-list-bullets {
+  list-style: disc;             /* 黒丸 */
+  padding-left: 1.6em;          /* bullet とテキストの余白調整 */
+  margin: 6px 0;
+  text-align: left;
+  font-size: clamp(18px, 6vw, 24px); /* 大きさも今の感覚に合うよう調整 */
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.plus-symbol {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin: 4px 0;
+}
+
+.program-header {
+  font-size: clamp(18px, 5vw, 26px);
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.programme-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 6px 0;
+  text-align: center;
+  font-size: clamp(18px, 5vw, 24px);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
 }
   </style>
 </head>
@@ -208,16 +243,19 @@
   </div>
 
   <div id="menu">
-    <div class="menu-section" data-lang='{"en":"Tea","de":"Tee","jp":"お茶"}'>Tea</div>
+    <!-- <div class="menu-section" data-lang='{"en":"Tea","de":"Tee","jp":"お茶"}'>Tea</div> -->
 
     <div class="tea-card">
       <img src="img/sencha.png" alt="Sencha" class="tea-image">
       <div class="tea-title-row">
-        <span class="tea-name" data-lang='{"en":"SENCHA","de":"SENCHA","jp":"煎茶"}'>SENCHA</span>
-        <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
-      </div>
+  <span class="tea-name" data-lang='{"en":"SENCHA","de":"SENCHA","jp":"煎茶"}'>COOKIE</span>
+  <div class="title-icons">
+    <img src="img/gluten-icon.png" alt="Gluten" class="inline-icon">
+    <img src="img/soya-icon.png" alt="Soya" class="inline-icon">
+  </div>
+</div>
       <div class="shokken-tag">SHOKKEN: 1</div>
-      <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+      <div class="tea-temp" data-lang='{"en":"Hot / Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot / Cold</div>
       <div class="tea-desc" data-lang='{"en":"Balanced umami & bitterness","de":"Umami & leichte Bitterkeit","jp":"旨味とほろ苦さのバランス"}'>Balanced umami & bitterness</div>
     </div>
     <!-- Bancha -->
@@ -228,7 +266,7 @@
     <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
   </div>
   <div class="shokken-tag">SHOKKEN: 1</div>
-  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-temp" data-lang='{"en":"Hot / Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot / Cold</div>
   <div class="tea-desc" data-lang='{"en":"Mild and earthy taste","de":"Mild & erdig","jp":"まろやかで土のような味わい"}'>Mild and earthy taste</div>
 </div>
 
@@ -240,7 +278,7 @@
     <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
   </div>
   <div class="shokken-tag">SHOKKEN: 1</div>
-  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-temp" data-lang='{"en":"Hot / Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot / Cold</div>
   <div class="tea-desc" data-lang='{"en":"Toasty and low in caffeine","de":"Röstig & wenig Koffein","jp":"焙煎香と低カフェイン"}'>Toasty and low in caffeine</div>
 </div>
 
@@ -252,7 +290,7 @@
     <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
   </div>
   <div class="shokken-tag">SHOKKEN: 1</div>
-  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-temp" data-lang='{"en":"Hot / Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot / Cold</div>
   <div class="tea-desc" data-lang='{"en":"Nutty and comforting blend with roasted rice","de":"Nussige & beruhigende Mischung mit geröstetem Reis","jp":"炒り米入りの香ばしく安心感あるお茶"}'>Nutty and comforting blend with roasted rice</div>
 </div>
 
@@ -271,7 +309,7 @@
     <!-- 他のティーカードも同様に追加 -->
 
     <!-- Latte & Soda Section -->
-<div class="menu-section" data-lang='{"en":"Latte & Soda","de":"Latte & Soda","jp":"ラテ・ソーダ"}'>Latte & Soda</div>
+<!-- <div class="menu-section" data-lang='{"en":"Latte & Soda","de":"Latte & Soda","jp":"ラテ・ソーダ"}'>Latte & Soda</div> -->
 
 <!-- Matcha Latte -->
 <div class="tea-card">
@@ -280,7 +318,7 @@
     <span class="tea-name" data-lang='{"en":"MATCHA LATTE","de":"MATCHA LATTE","jp":"抹茶ラテ"}'>MATCHA LATTE</span>
   </div>
   <div class="shokken-tag">SHOKKEN: 1</div>
-  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-temp" data-lang='{"en":"Hot / Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot / Cold</div>
 <ul class="tea-options">
   <li>
     <div class="option-row">
@@ -322,7 +360,7 @@
     <span class="tea-name" data-lang='{"en":"WAKOCHA with MILK","de":"WAKOCHA mit Milch","jp":"和紅茶ミルク割り"}'>WAKOCHA with MILK</span>
   </div>
   <div class="shokken-tag">SHOKKEN: 1</div>
-  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-temp" data-lang='{"en":"Hot / Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot / Cold</div>
 <ul class="tea-options">
   <li>
     <div class="option-row">
@@ -345,12 +383,156 @@
   </li>
 </ul>
 </div>
-    <div class="menu-section" data-lang='{"en":"Other Drinks","de":"Sonstige Getränke","jp":"その他の飲み物"}'>Other Drinks</div>
-    <div class="menu-section" data-lang='{"en":"Sweets","de":"Süßigkeiten","jp":"お菓子"}'>Sweets</div>
-    <div class="menu-section" data-lang='{"en":"Tea Tasting","de":"Teeverkostung","jp":"飲み比べ"}'>Tea Tasting</div>
-    <div class="menu-section" data-lang='{"en":"Workshop","de":"Workshop","jp":"ワークショップ"}'>Workshop</div>
+    <!-- <div class="menu-section" data-lang='{"en":"Other Drinks","de":"Sonstige Getränke","jp":"その他の飲み物"}'>Other Drinks</div> -->
+
+    <!-- COFFEE -->
+<div class="tea-card">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"Coffee","de":"Kaffee","jp":"コーヒー"}'>Coffee</span>
+    <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Hot","de":"Heiß","jp":"ホット"}'>Hot</div>
+  <div class="tea-desc" data-lang='{
+    "en":"Also available with dairy or oat milk",
+    "de":"Auch mit Milch oder Hafermilch erhältlich",
+    "jp":"牛乳またはオーツミルクで提供可能"
+  }'>Also available with dairy or oat milk</div>
+</div>
+
+<!-- CAPPUCCINO -->
+<div class="tea-card">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"Cappuchino","de":"Cappuchino","jp":"カプチーノ"}'>Cappuchino</span>
+    <img src="img/milch-icon.png" alt="Milk" class="vegan-icon">
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <ul class="tea-options">
+    <li>
+      <div class="option-row">
+        <span class="bullet">○</span>
+        <span class="option-text" data-lang='{"en":"Dairy Milk","de":"Kuhmilch","jp":"牛乳"}'>Dairy Milk</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- STILL WATER -->
+<div class="tea-card">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"Still Water","de":"Stilles Wasser","jp":"ミネラルウォーター"}'>Still Water</span>
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+</div>
+    <!-- <div class="menu-section" data-lang='{"en":"Sweets","de":"Süßigkeiten","jp":"お菓子"}'>Sweets</div> -->
+<!-- YOKAN -->
+<div class="tea-card">
+  <img src="img/yokan.png" alt="Yokan" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"YOKAN","de":"YOKAN","jp":"羊羹"}'>YOKAN</span>
+    <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
+  </div>
+  <div class="shokken-tag" data-lang='{"en":"2 slices for 1 SHOKKEN","de":"2 Scheiben für 1 SHOKKEN","jp":"1枚の食券で2切れ"}'>2 slices for 1 SHOKKEN</div>
+  <div class="tea-desc" data-lang='{
+    "en":"Traditional Japanese red bean jelly",
+    "de":"Traditionelles japanisches Bohnengelee",
+    "jp":"伝統的な日本の羊羹"
+  }'>Traditional Japanese red bean jelly</div>
+</div>
+
+<!-- COOKIE -->
+<div class="tea-card">
+  <img src="img/cookie.png" alt="Cookie" class="tea-image">
+<div class="tea-title-row">
+  <span class="tea-name" data-lang='{"en":"COOKIE","de":"KEKS","jp":"クッキー"}'>COOKIE</span>
+  <div class="title-icons">
+    <img src="img/gluten-icon.png" alt="Gluten" class="inline-icon">
+    <img src="img/soya-icon.png" alt="Soya" class="inline-icon">
   </div>
 </div>
+  <div class="shokken-tag" data-lang='{"en":"3 pieces for 1 SHOKKEN","de":"3 Stück für 1 SHOKKEN","jp":"1枚の食券で3個"}'>3 pieces for 1 SHOKKEN</div>
+  <ul class="tea-options">
+    <li>
+      <div class="option-row">
+        <span class="bullet">○</span>
+        <span class="option-text" data-lang='{"en":"Matcha","de":"Matcha","jp":"抹茶"}'>Matcha</span>
+      </div>
+    </li>
+    <li>
+      <div class="option-row">
+        <span class="bullet">○</span>
+        <span class="option-text" data-lang='{"en":"Wakocha","de":"Wakocha","jp":"和紅茶"}'>Wakocha</span>
+      </div>
+    </li>
+    <li>
+      <div class="option-row">
+        <span class="bullet">○</span>
+        <span class="option-text" data-lang='{"en":"Hojicha","de":"Hojicha","jp":"ほうじ茶"}'>Hojicha</span>
+      </div>
+    </li>
+  </ul>
+</div>
+    <!-- <div class="menu-section" data-lang='{"en":"Tea Tasting","de":"Teeverkostung","jp":"飲み比べ"}'>Tea Tasting</div> -->
+
+    <div class="tea-card">
+  <img src="img/teatasting.png" alt="Tea Tasting Set" class="tea-image">
+
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"TEA TASTING","de":"TEEVERKOSTUNG","jp":"飲み比べ"}'>TEA TASTING</span>
+  </div>
+
+  <div class="shokken-tag" data-lang='{"en":"SHOKKEN: 3","de":"SHOKKEN: 3","jp":"食券：3枚"}'>SHOKKEN: 3</div>
+
+  <ul class="tea-list-bullets">
+    <li data-lang='{"en":"Sencha","de":"Sencha","jp":"煎茶"}'>Sencha</li>
+    <li data-lang='{"en":"Bancha","de":"Bancha","jp":"番茶"}'>Bancha</li>
+    <li data-lang='{"en":"Wakocha","de":"Wakocha","jp":"和紅茶"}'>Wakocha</li>
+  </ul>
+
+  <div class="plus-symbol">＋</div>
+
+  <ul class="tea-list-bullets">
+    <li data-lang='{"en":"Yokan","de":"Yokan","jp":"羊羹"}'>Yokan</li>
+  </ul>
+</div>
+    <!-- <div class="menu-section" data-lang='{"en":"Workshop","de":"Workshop","jp":"ワークショップ"}'>Workshop</div> -->
+  </div>
+  <!-- WORKSHOP - MATCHA & NERIKIRI -->
+<div class="tea-card">
+  <img src="img/workshop.png" alt="Matcha & Nerikiri Workshop" class="tea-image">
+  
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{
+      "en": "MATCHA & NERIKIRI",
+      "de": "MATCHA & NERIKIRI",
+      "jp": "抹茶と練り切り"
+    }'>MATCHA & NERIKIRI</span>
+  </div>
+
+  <div class="tea-desc" data-lang='{
+    "en": "Create beautiful Nerikiri sweets and whisk Matcha!<br> Please register in advance at the counter.",
+    "de": "Bereiten Sie Matcha und japanisches Konfekt selbst zu! <br>Bitte registrieren Sie vorab an der Kasse.",
+    "jp": "美しい練り切りを作り、抹茶を点てましょう！ご参加希望の方はカウンターで事前にご登録ください。"
+  }'>
+    Create beautiful Nerikiri sweets and whisk Matcha! <br> Please register in advance at the counter.
+  </div>
+
+  <div class="program-header" data-lang='{
+    "en": "PROGRAMME",
+    "de": "PROGRAMM",
+    "jp": "プログラム"
+  }'><strong>PROGRAMME</strong></div>
+
+  <ul class="programme-list">
+    <li>① 11:00 - 11:30</li>
+    <li>② 12:30 - 13:00</li>
+    <li>③ 14:00 - 14:30</li>
+    <li>④ 15:00 - 15:30</li>
+  </ul>
+</div>
+</div>
+
+
 
 <script>
   const buttons = document.querySelectorAll('.lang-btn');
@@ -368,11 +550,7 @@ function updateMenuLanguage(lang) {
   elements.forEach(el => {
     const translations = JSON.parse(el.getAttribute('data-lang'));
     if (translations[lang]) {
-      if (el.childNodes.length === 1 || el.tagName === 'SPAN' || el.tagName === 'DIV') {
-        el.textContent = translations[lang];
-      } else if (el.childNodes.length > 1 && el.childNodes[0].nodeType === Node.TEXT_NODE) {
-        el.childNodes[0].textContent = translations[lang];
-      }
+      el.innerHTML = translations[lang]; // ✅ innerHTML に変更
     }
   });
 }

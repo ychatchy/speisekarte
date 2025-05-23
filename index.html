@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Language Selector & Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --section-font-size: clamp(24px, 6vw, 48px);
+    }
+
+    body {
+  font-family: sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: start; /* ← 中央揃えから上寄せに変更 */
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: 100vh; /* ← heightではなくmin-heightにする */
+}
+
+    .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+.language-selector {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  padding: 10px 16px;
+  width: 80vw;
+  min-height: 48px; /* ← height: 24px を削除し、これを追加 */
+}
+
+    .lang-btn {
+      position: relative;
+      z-index: 2;
+      border-radius: 40px;
+      border: none;
+      background: none;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 10px 8vw;
+      font-size: clamp(18px, 4.5vw, 32px);
+      color: #555;
+      transition: color 0.3s;
+      min-width: 70px;
+      outline: none;
+    }
+
+    .lang-btn:hover {
+      color: #000;
+    }
+
+    .slider {
+      position: absolute;
+      height: 70%;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      transition: left 0.3s ease, width 0.3s ease;
+      z-index: 1;
+    }
+
+    #menu {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .menu-section {
+      font-family: Georgia, serif;
+      font-size: var(--section-font-size);
+      text-align: left;
+    }
+
+    .tea-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 15px auto;
+      padding: 16px;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .tea-image {
+      width: 100%;
+      max-width: 240px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tea-title-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+.shokken-tag {
+  margin-top: 12px;
+  padding: 8px 18px; /* ← パディング大きくして余白を増やす */
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+  display: inline-block;
+}
+
+    .tea-name {
+      font-size: 40px;
+      font-weight: bold;
+      font-family: 'Georgia', serif;
+    }
+
+    .vegan-icon {
+      width: 40px;
+      height: auto;
+    }
+
+    .tea-temp {
+      margin-top: 18px;
+      margin-bottom: 15px;
+      font-weight: 100;
+      font-size: 30px;
+    }
+
+  .tea-desc {
+  margin-top: 12px;
+  font-size: clamp(18px, 5vw, 26px); /* ← 読みやすい大きさ */
+  max-width: 260px;                  /* ← ボックスの幅を制限 */
+  text-align: center;
+}
+
+.tea-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ← 中央から左へ！ */
+  width: 100%;             /* ← コンテナいっぱいに広げる */
+  padding: 0;
+  margin: 8px 0;
+  list-style: none;
+}
+
+.tea-options li {
+  margin: 0px 0;
+  
+}
+
+.option-row {
+  display: flex;
+  align-items: center;     /* ← 高さ基準で中央揃え */
+  gap: 10px;
+  width: 100%;             /* ← 親いっぱいに伸ばす */
+  justify-content: flex-start;
+}
+
+.bullet {
+
+  font-size: 24px;
+  line-height: 1;
+  margin-right: 4px;
+  margin-left: 15vw; 
+  color: #333;
+}
+
+
+.option-icons {
+  display: flex;
+  gap: 4px;                /* ← アイコンの間隔を狭く */
+}
+.inline-icon {
+  height: 60px;
+  width: auto;
+}
+
+.option-text {
+  font-size: clamp(20px, 5vw, 35px); /* 📱 スマホ〜タブレットまで見やすく調整 */
+  font-weight: 200;
+  font-family: 'Noto Sans JP', sans-serif;
+  text-align: left;
+}
+  </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+  <div class="language-selector">
+    <div class="slider" id="slider"></div>
+    <button class="lang-btn active" data-lang-code="en">EN</button>
+<button class="lang-btn" data-lang-code="de">DE</button>
+<button class="lang-btn" data-lang-code="jp">JP</button>
+  </div>
+
+  <div id="menu">
+    <div class="menu-section" data-lang='{"en":"Tea","de":"Tee","jp":"お茶"}'>Tea</div>
+
+    <div class="tea-card">
+      <img src="img/sencha.png" alt="Sencha" class="tea-image">
+      <div class="tea-title-row">
+        <span class="tea-name" data-lang='{"en":"SENCHA","de":"SENCHA","jp":"煎茶"}'>SENCHA</span>
+        <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
+      </div>
+      <div class="shokken-tag">SHOKKEN: 1</div>
+      <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+      <div class="tea-desc" data-lang='{"en":"Balanced umami & bitterness","de":"Umami & leichte Bitterkeit","jp":"旨味とほろ苦さのバランス"}'>Balanced umami & bitterness</div>
+    </div>
+    <!-- Bancha -->
+<div class="tea-card">
+  <img src="img/bancha.png" alt="Bancha" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"BANCHA","de":"BANCHA","jp":"番茶"}'>BANCHA</span>
+    <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-desc" data-lang='{"en":"Mild and earthy taste","de":"Mild & erdig","jp":"まろやかで土のような味わい"}'>Mild and earthy taste</div>
+</div>
+
+<!-- Hojicha -->
+<div class="tea-card">
+  <img src="img/hojicha.png" alt="Hojicha" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"HOJICHA","de":"HOJICHA","jp":"ほうじ茶"}'>HOJICHA</span>
+    <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-desc" data-lang='{"en":"Toasty and low in caffeine","de":"Röstig & wenig Koffein","jp":"焙煎香と低カフェイン"}'>Toasty and low in caffeine</div>
+</div>
+
+<!-- Genmaicha -->
+<div class="tea-card">
+  <img src="img/genmaicha.png" alt="Genmaicha" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"GENMAICHA","de":"GENMAICHA","jp":"玄米茶"}'>GENMAICHA</span>
+    <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+  <div class="tea-desc" data-lang='{"en":"Nutty and comforting blend with roasted rice","de":"Nussige & beruhigende Mischung mit geröstetem Reis","jp":"炒り米入りの香ばしく安心感あるお茶"}'>Nutty and comforting blend with roasted rice</div>
+</div>
+
+<!-- Wakocha -->
+<div class="tea-card">
+  <img src="img/wakocha.png" alt="Wakocha" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"WAKOCHA","de":"WAKOCHA","jp":"和紅茶"}'>WAKOCHA</span>
+    <img src="img/vegan-icon.png" alt="Vegan" class="vegan-icon">
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Hot only","de":"Nur heiß","jp":"ホットのみ"}'>Hot only</div>
+  <div class="tea-desc" data-lang='{"en":"Japanese black tea with soft aroma","de":"Japanischer Schwarztee mit mildem Aroma","jp":"柔らかな香りの日本紅茶"}'>Japanese black tea with soft aroma</div>
+</div>
+
+    <!-- 他のティーカードも同様に追加 -->
+
+    <!-- Latte & Soda Section -->
+<div class="menu-section" data-lang='{"en":"Latte & Soda","de":"Latte & Soda","jp":"ラテ・ソーダ"}'>Latte & Soda</div>
+
+<!-- Matcha Latte -->
+<div class="tea-card">
+  <img src="img/matcha-latte.png" alt="Matcha Latte" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"MATCHA LATTE","de":"MATCHA LATTE","jp":"抹茶ラテ"}'>MATCHA LATTE</span>
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+<ul class="tea-options">
+  <li>
+    <div class="option-row">
+      <span class="bullet">○</span>
+      <span class="option-text" data-lang='{"en":"Cow Milk","de":"mit Kuhmilch","jp":"牛乳"}'>with cow milk</span>
+      <div class="option-icons">
+        <img src="img/milch-icon.png" alt="milk" class="inline-icon">
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="option-row">
+      <span class="bullet">○</span>
+      <span class="option-text" data-lang='{"en":"Oat Milk","de":"Hafermilch","jp":"オーツミルク"}'>Oat Milk</span>
+      <div class="option-icons">
+        <img src="img/gluten-icon.png" alt="gluten" class="inline-icon">
+        <img src="img/vegan-icon.png" alt="vegan" class="inline-icon">
+      </div>
+    </div>
+  </li>
+</ul>
+
+</div>
+
+<!-- Matcha Soda -->
+<div class="tea-card">
+  <img src="img/matcha-soda.png" alt="Matcha Soda" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"MATCHA SODA","de":"MATCHA SODA","jp":"抹茶ソーダ"}'>MATCHA SODA</span>
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Cold only","de":"Nur kalt","jp":"コールドのみ"}'>Cold only</div>
+</div>
+
+<!-- m Milch -->
+<div class="tea-card">
+  <img src="img/wakocha-milch.png" alt="Wakocha mit Milch" class="tea-image">
+  <div class="tea-title-row">
+    <span class="tea-name" data-lang='{"en":"WAKOCHA with MILK","de":"WAKOCHA mit Milch","jp":"和紅茶ミルク割り"}'>WAKOCHA with MILK</span>
+  </div>
+  <div class="shokken-tag">SHOKKEN: 1</div>
+  <div class="tea-temp" data-lang='{"en":"Hot/Cold","de":"Heiß/Kalt","jp":"ホット / コールド"}'>Hot/Cold</div>
+<ul class="tea-options">
+  <li>
+    <div class="option-row">
+      <span class="bullet">○</span>
+      <span class="option-text" data-lang='{"en":"Cow Milk","de":"Kuhmilch","jp":"牛乳"}'>Cow Milk</span>
+      <div class="option-icons">
+        <img src="img/milch-icon.png" alt="milk" class="inline-icon">
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="option-row">
+      <span class="bullet">○</span>
+      <span class="option-text" data-lang='{"en":"Oat Milk","de":"Hafermilch","jp":"オーツミルク"}'>Oat Milk</span>
+      <div class="option-icons">
+        <img src="img/gluten-icon.png" alt="gluten" class="inline-icon">
+        <img src="img/vegan-icon.png" alt="vegan" class="inline-icon">
+      </div>
+    </div>
+  </li>
+</ul>
+</div>
+    <div class="menu-section" data-lang='{"en":"Other Drinks","de":"Sonstige Getränke","jp":"その他の飲み物"}'>Other Drinks</div>
+    <div class="menu-section" data-lang='{"en":"Sweets","de":"Süßigkeiten","jp":"お菓子"}'>Sweets</div>
+    <div class="menu-section" data-lang='{"en":"Tea Tasting","de":"Teeverkostung","jp":"飲み比べ"}'>Tea Tasting</div>
+    <div class="menu-section" data-lang='{"en":"Workshop","de":"Workshop","jp":"ワークショップ"}'>Workshop</div>
+  </div>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.lang-btn');
+  const slider = document.getElementById('slider');
+
+  function updateSlider(target) {
+    const offsetLeft = target.offsetLeft;
+    const width = target.offsetWidth;
+    slider.style.left = `${offsetLeft}px`;
+    slider.style.width = `${width}px`;
+  }
+
+function updateMenuLanguage(lang) {
+  const elements = document.querySelectorAll('[data-lang]');
+  elements.forEach(el => {
+    const translations = JSON.parse(el.getAttribute('data-lang'));
+    if (translations[lang]) {
+      if (el.childNodes.length === 1 || el.tagName === 'SPAN' || el.tagName === 'DIV') {
+        el.textContent = translations[lang];
+      } else if (el.childNodes.length > 1 && el.childNodes[0].nodeType === Node.TEXT_NODE) {
+        el.childNodes[0].textContent = translations[lang];
+      }
+    }
+  });
+}
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    buttons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    updateSlider(button);
+    const selectedLang = button.getAttribute('data-lang-code');
+    updateMenuLanguage(selectedLang);
+  });
+});
+
+window.addEventListener('load', () => {
+  const activeBtn = document.querySelector('.lang-btn.active');
+  updateSlider(activeBtn);
+  updateMenuLanguage(activeBtn.getAttribute('data-lang-code'));
+});
+</script>
+
+</body>
+</html>
